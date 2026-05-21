@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Naija Eats Demo</title>
+  <style>
+    :root {
+      --bg: #f4efe8;
+      --panel: #ffffff;
+      --ink: #1e1a17;
+      --muted: #5f5a56;
+      --border: #d7cfc6;
+      --accent: #d97706;
+      --accent-2: #14532d;
+      --accent-soft: #fff1dc;
+      --good: #0f766e;
+      --bad: #b45309;
+      --step: #f8f3ec;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+    body { min-height: 100vh; }
+
+    .shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 32px 20px 48px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent-2);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.04;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 70ch;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 8px 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .map {
+      position: relative;
+      min-height: 360px;
+      background: linear-gradient(180deg, #fbf7f2 0%, #f7f2ea 100%);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .map::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(215, 207, 198, 0.45) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(215, 207, 198, 0.45) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .map-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 1;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      padding: 8px 10px;
+      font-size: 0.9rem;
+    }
+
+    .restaurant-node {
+      position: absolute;
+      width: 210px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      z-index: 1;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    .restaurant-node strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.98rem;
+    }
+
+    .restaurant-node span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .restaurant-node.active {
+      border-color: var(--accent);
+      background: #fff8ef;
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .restaurant-node.active::after {
+      content: "Selected";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+
+    .node-1 { top: 74px; left: 42px; }
+    .node-2 { top: 186px; left: 210px; }
+    .node-3 { top: 102px; right: 24px; }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step {
+      background: var(--step);
+      border: 1px solid var(--border);
+      padding: 14px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.98rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .field-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 12px 12px;
+      font: inherit;
+    }
+
+    textarea { min-height: 92px; resize: vertical; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .rating-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .rating-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .rating-btn {
+      min-width: 0;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+
+    .rating-btn.active {
+      background: var(--accent-2);
+      color: #fff;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(20, 83, 45, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    button {
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 16px;
+      font: inherit;
+      cursor: pointer;
+      min-width: 180px;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+
+    button.secondary {
+      background: var(--panel);
+      color: var(--ink);
+      border-color: var(--border);
+    }
+
+    button:hover,
+    button:focus-visible,
+    .rating-btn:hover,
+    .rating-btn:focus-visible,
+    .restaurant-node:hover,
+    .restaurant-node:focus-visible {
+      outline: none;
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.12);
+    }
+
+    button:active,
+    .rating-btn:active,
+    .restaurant-node:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .demo-output {
+      display: grid;
+      gap: 12px;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 7px 10px;
+      border: 1px solid var(--border);
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-size: 0.92rem;
+    }
+
+    .result-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 16px;
+      min-height: 220px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .result-box strong { color: var(--accent-2); }
+
+    .status {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      background: #eef8f3;
+      color: var(--good);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .status.error {
+      color: var(--bad);
+    }
+
+    .error {
+      background: #fff1f1;
+      color: var(--bad);
+    }
+
+    .summary {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .summary-item strong {
+      color: var(--ink);
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 8px 0 0;
+    }
+
+    .example {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 920px) {
+      .grid, .two-col { grid-template-columns: 1fr; }
+      .shell { padding: 18px 12px 32px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="topline">
+        <span class="pill">Naija Eats</span>
+        <span class="pill">Live API demo</span>
+      </div>
+      <div class="eyebrow">Interactive review simulation</div>
+      <h1>See how the API builds a review, step by step.</h1>
+      <p class="lede">
+        Pick a restaurant on the map, set the rating you want to inspect, and run the request. The page shows the payload first, then the API response, so the flow is easy to follow.
+      </p>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2 class="section-title">1. Pick a restaurant</h2>
+        <div class="map" id="demo-map" aria-label="Demo restaurant map">
+          <div class="map-label">Demo map. Select a restaurant to load its data.</div>
+          <button class="restaurant-node node-1 active" type="button" data-restaurant-key="mama-titi">
+            <strong>Mama Titi's Kitchen</strong>
+            <span>Surulere, Lagos<br />Nigerian food · close by · busy evenings</span>
+          </button>
+          <button class="restaurant-node node-2" type="button" data-restaurant-key="buka-junction">
+            <strong>Buka Junction</strong>
+            <span>Yaba, Lagos<br />Simple lunch spot · low price</span>
+          </button>
+          <button class="restaurant-node node-3" type="button" data-restaurant-key="jollof-yard">
+            <strong>Jollof Yard</strong>
+            <span>Ikeja, Lagos<br />Higher-end spot · dinner crowd</span>
+          </button>
+        </div>
+        <p class="small-note">The selected restaurant updates the form on the right, so the judge can compare choices without retyping everything.</p>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">2. Step through the flow</h2>
+        <ol class="steps">
+          <li class="step">
+            <strong>Step 1 - Load a user profile</strong>
+            <p>The app starts with a stored user identity so the system knows who is being simulated.</p>
+          </li>
+          <li class="step">
+            <strong>Step 2 - Describe the restaurant</strong>
+            <p>Enter the restaurant details the judge wants to test. The fields already match the sample API payload.</p>
+          </li>
+          <li class="step">
+            <strong>Step 3 - Send to the API</strong>
+            <p>Click the button to post the data to <code>/simulate-review</code>. The response comes back as structured JSON.</p>
+          </li>
+          <li class="step">
+            <strong>Step 4 - Review the result</strong>
+            <p>The right side shows the predicted rating, the generated review, the confidence score, and the reasoning trace.</p>
+          </li>
+        </ol>
+        <div class="summary">
+          <div class="summary-item"><span>Current user</span><strong id="summary-user">bayo_001</strong></div>
+          <div class="summary-item"><span>Selected restaurant</span><strong id="summary-restaurant">Mama Titi's Kitchen</strong></div>
+          <div class="summary-item"><span>Expected tone</span><strong id="summary-tone">Authentic local food, service-sensitive</strong></div>
+          <div class="summary-item"><span>Judge rating</span><strong id="summary-rating">4</strong></div>
+        </div>
+      </div>
+
+      <div class="card demo-output">
+        <h2 class="section-title">3. Build the request</h2>
+        <div class="badge-row">
+          <span class="badge">FastAPI backend</span>
+          <span class="badge">OpenRouter Nemotron</span>
+          <span class="badge">Nigerian voice layer</span>
+        </div>
+
+        <form id="demo-form">
+          <div class="field-grid">
+            <div>
+              <label for="user_id">User ID</label>
+              <input id="user_id" name="user_id" value="bayo_001" />
+            </div>
+
+            <div>
+              <label for="restaurant_name">Restaurant name</label>
+              <input id="restaurant_name" name="restaurant_name" value="Mama Titi's Kitchen" />
+            </div>
+
+            <div class="two-col">
+              <div>
+                <label for="category">Category</label>
+                <input id="category" name="category" value="Nigerian" />
+              </div>
+              <div>
+                <label for="price_range">Price range</label>
+                <input id="price_range" name="price_range" value="₦₦" />
+              </div>
+            </div>
+
+            <div>
+              <label for="location">Location</label>
+              <input id="location" name="location" value="Surulere, Lagos" />
+            </div>
+
+            <div>
+              <label for="menu_highlights">Menu highlights</label>
+              <textarea id="menu_highlights" name="menu_highlights">amala, gbegiri, assorted meat</textarea>
+            </div>
+
+            <div>
+              <label for="common_tags">Common feedback</label>
+              <textarea id="common_tags" name="common_tags">authentic, slow service</textarea>
+            </div>
+
+            <div class="rating-group">
+              <label>Judge rating picker</label>
+              <div class="rating-row" id="rating-row" aria-label="Select a rating">
+                <button type="button" class="rating-btn active" data-rating="1">1</button>
+                <button type="button" class="rating-btn" data-rating="2">2</button>
+                <button type="button" class="rating-btn" data-rating="3">3</button>
+                <button type="button" class="rating-btn" data-rating="4">4</button>
+                <button type="button" class="rating-btn" data-rating="5">5</button>
+              </div>
+              <p class="small-note">This is a judge-side comparison control. It does not change the API contract, but it makes the demo easier to inspect.</p>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit">Run the API demo</button>
+            <button type="button" class="secondary" id="load-sample">Reset sample values</button>
+          </div>
+          <p class="example">Judges can change the restaurant, compare the rating picker, and rerun the request to see how the response changes.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="grid" style="margin-top: 20px;">
+      <div class="card">
+        <h2 class="section-title">3. Request payload</h2>
+        <div id="payload-view" class="result-box">The request preview will appear here.</div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">4. API response</h2>
+        <div id="response-status" class="status">Waiting for input</div>
+        <div id="response-view" class="result-box">Run the demo to see the predicted rating, review text, confidence, and reasoning.</div>
+        <p class="subtle">Endpoint used: <code>/simulate-review</code></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('demo-form');
+    const payloadView = document.getElementById('payload-view');
+    const responseView = document.getElementById('response-view');
+    const responseStatus = document.getElementById('response-status');
+    const loadSampleButton = document.getElementById('load-sample');
+    const map = document.getElementById('demo-map');
+    const summaryUser = document.getElementById('summary-user');
+    const summaryRestaurant = document.getElementById('summary-restaurant');
+    const summaryTone = document.getElementById('summary-tone');
+    const summaryRating = document.getElementById('summary-rating');
+    const ratingButtons = Array.from(document.querySelectorAll('.rating-btn'));
+    const restaurantCatalog = {
+      'mama-titi': {
+        name: "Mama Titi's Kitchen",
+        category: 'Nigerian',
+        price_range: '₦₦',
+        location: 'Surulere, Lagos',
+        menu_highlights: ['amala', 'gbegiri', 'assorted meat'],
+        common_tags: ['authentic', 'slow service'],
+        rating: 4,
+      },
+      'buka-junction': {
+        name: 'Buka Junction',
+        category: 'Local',
+        price_range: '₦',
+        location: 'Yaba, Lagos',
+        menu_highlights: ['rice', 'stew', 'swallow'],
+        common_tags: ['fast service', 'value'],
+        rating: 3,
+      },
+      'jollof-yard': {
+        name: 'Jollof Yard',
+        category: 'Contemporary Nigerian',
+        price_range: '₦₦₦',
+        location: 'Ikeja, Lagos',
+        menu_highlights: ['jollof', 'suya', 'small chops'],
+        common_tags: ['stylish', 'consistent'],
+        rating: 5,
+      },
+    };
+    let judgeRating = 1;
+
+    const restaurantToneMap = {
+      'Mama Titi\'s Kitchen': 'Authentic local food, service-sensitive',
+      'Buka Junction': 'Fast lunch, value-focused',
+      'Jollof Yard': 'Polished, quality-first',
+    };
+
+    function readValues() {
+      const menuHighlights = document.getElementById('menu_highlights').value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      const commonTags = document.getElementById('common_tags').value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      return {
+        user_id: document.getElementById('user_id').value.trim(),
+        restaurant: {
+          name: document.getElementById('restaurant_name').value.trim(),
+          category: document.getElementById('category').value.trim(),
+          price_range: document.getElementById('price_range').value.trim(),
+          location: document.getElementById('location').value.trim(),
+          menu_highlights: menuHighlights,
+          common_tags: commonTags,
+        },
+      };
+    }
+
+    function renderPayload() {
+      payloadView.textContent = JSON.stringify(readValues(), null, 2);
+    }
+
+    function setActiveNode(node) {
+      Array.from(document.querySelectorAll('.restaurant-node')).forEach((button) => {
+        button.classList.toggle('active', button === node);
+        button.setAttribute('aria-pressed', button === node ? 'true' : 'false');
+      });
+    }
+
+    function applyRestaurant(data) {
+      document.getElementById('restaurant_name').value = data.name;
+      document.getElementById('category').value = data.category;
+      document.getElementById('price_range').value = data.price_range;
+      document.getElementById('location').value = data.location;
+      document.getElementById('menu_highlights').value = data.menu_highlights.join(', ');
+      document.getElementById('common_tags').value = data.common_tags.join(', ');
+      summaryRestaurant.textContent = data.name;
+      summaryTone.textContent = restaurantToneMap[data.name] || 'Balanced, general-purpose';
+      renderPayload();
+    }
+
+    function setJudgeRating(value) {
+      judgeRating = Number(value);
+      summaryRating.textContent = String(judgeRating);
+      ratingButtons.forEach((button) => {
+        const isActive = Number(button.dataset.rating) === judgeRating;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    function setStatus(text, isError = false) {
+      responseStatus.textContent = text;
+      responseStatus.classList.toggle('error', isError);
+    }
+
+    function renderResponse(data) {
+      responseView.textContent = [
+        `Predicted rating: ${data.predicted_rating}`,
+        `Confidence: ${data.confidence}`,
+        '',
+        'Review text:',
+        data.review_text,
+        '',
+        'Reasoning:',
+        data.reasoning,
+      ].join('\n');
+    }
+
+    form.addEventListener('input', renderPayload);
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const payload = readValues();
+      renderPayload();
+      setStatus('Sending request to the API...');
+      responseView.textContent = 'Loading response from /simulate-review...';
+
+      try {
+        const response = await fetch('/simulate-review', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.detail || 'Request failed');
+        }
+
+        renderResponse(data);
+        setStatus('Success - live response received');
+      } catch (error) {
+        responseView.textContent = `Unable to call the API.\n\n${error.message}`;
+        setStatus('Error - check the backend server', true);
+      }
+    });
+
+    loadSampleButton.addEventListener('click', () => {
+      document.getElementById('user_id').value = 'bayo_001';
+      applyRestaurant({
+        name: "Mama Titi's Kitchen",
+        category: 'Nigerian',
+        price_range: '₦₦',
+        location: 'Surulere, Lagos',
+        menu_highlights: ['amala', 'gbegiri', 'assorted meat'],
+        common_tags: ['authentic', 'slow service'],
+      });
+      setJudgeRating(4);
+      summaryUser.textContent = 'bayo_001';
+      renderPayload();
+      setStatus('Sample values restored');
+    });
+
+    map.addEventListener('click', (event) => {
+      const node = event.target.closest('.restaurant-node');
+      if (!node) return;
+
+      const data = restaurantCatalog[node.dataset.restaurantKey];
+      if (!data) return;
+      setActiveNode(node);
+      applyRestaurant(data);
+      setJudgeRating(data.rating || 4);
+      setStatus(`Loaded ${data.name}`);
+    });
+
+    ratingButtons.forEach((button) => {
+      button.addEventListener('click', () => setJudgeRating(button.dataset.rating));
+    });
+
+    Array.from(document.querySelectorAll('.restaurant-node')).forEach((button) => {
+      button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+    });
+
+    ratingButtons.forEach((button) => {
+      button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
+    });
+
+    renderPayload();
+    setJudgeRating(4);
+  </script>
+</body>
+</html>

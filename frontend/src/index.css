@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body, #root {
+  background-color: #0E1B2E;
+  font-family: 'Inter', 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  color: #FFFFFF;
+}
+
+::selection {
+  background: #F2B137;
+  color: #0E1B2E;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-navy shadow-gold transition hover:bg-gold-soft hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/5;
+  }
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-navy/25 px-6 py-3 text-sm font-semibold text-navy transition hover:border-navy hover:bg-navy/5;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold;
+  }
+  .eyebrow-light {
+    @apply inline-flex items-center gap-2 rounded-full border border-navy/15 bg-navy/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-navy;
+  }
+  .section-heading {
+    @apply font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl;
+  }
+}
+
+.grid-bg {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+.hero-glow {
+  background:
+    radial-gradient(800px 360px at 70% 10%, rgba(242,177,55,0.18), transparent 60%),
+    radial-gradient(700px 320px at 10% 80%, rgba(46,139,87,0.16), transparent 60%);
+}
