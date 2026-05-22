@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar.jsx'
 import Hero from '../components/Hero.jsx'
 import ProblemSection from '../components/ProblemSection.jsx'
 import HowItWorks from '../components/HowItWorks.jsx'
-import DemoPreview from '../components/DemoPreview.jsx'
+import AppPreview from '../components/AppPreview.jsx'
 import TechStack from '../components/TechStack.jsx'
 import BayoStory from '../components/BayoStory.jsx'
 import ScoringSection from '../components/ScoringSection.jsx'
@@ -24,7 +24,7 @@ export default function Landing() {
         <Hero />
         <ProblemSection />
         <HowItWorks />
-        <DemoPreview />
+        <AppPreview />
         <TechStack />
         <BayoStory />
         <ScoringSection />

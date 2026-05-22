@@ -27,7 +27,6 @@ const rows = [
 export default function ScoringSection() {
   return (
     <section className="relative overflow-hidden bg-navy py-24 sm:py-28">
-      <div className="absolute inset-0 hero-glow opacity-60" />
       <div className="container-x relative">
         <SectionHeading
           eyebrow="The Rubric"

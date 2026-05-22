@@ -6,7 +6,7 @@ import Logo from './Logo.jsx'
 const links = [
   { label: 'Features', href: '#problem' },
   { label: 'How It Works', href: '#how' },
-  { label: 'Demo', href: '#demo' },
+  { label: 'Preview', href: '#demo' },
   { label: 'About', href: '#team' }
 ]
 

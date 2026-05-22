@@ -41,10 +41,10 @@ body {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-navy/25 px-6 py-3 text-sm font-semibold text-navy transition hover:border-navy hover:bg-navy/5;
   }
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold;
+    @apply block text-sm font-semibold uppercase tracking-[0.2em] text-gold mb-2;
   }
   .eyebrow-light {
-    @apply inline-flex items-center gap-2 rounded-full border border-navy/15 bg-navy/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-navy;
+    @apply block text-sm font-semibold uppercase tracking-[0.2em] text-navy mb-2;
   }
   .section-heading {
     @apply font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl;
@@ -56,8 +56,18 @@ body {
   background-size: 28px 28px;
 }
 
-.hero-glow {
-  background:
-    radial-gradient(800px 360px at 70% 10%, rgba(242,177,55,0.18), transparent 60%),
-    radial-gradient(700px 320px at 10% 80%, rgba(46,139,87,0.16), transparent 60%);
+/* Scrollbar Theming */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0E1B2E; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(242, 177, 55, 0.4); /* gold-ish */
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(242, 177, 55, 0.8);
 }

@@ -30,7 +30,7 @@ export default function Footer() {
                 <a href="#how" className="text-white transition hover:text-gold">How It Works</a>
               </li>
               <li>
-                <a href="#demo" className="text-white transition hover:text-gold">Demo</a>
+                <a href="#demo" className="text-white transition hover:text-gold">Preview</a>
               </li>
             </ul>
           </div>

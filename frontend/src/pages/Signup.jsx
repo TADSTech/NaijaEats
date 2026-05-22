@@ -25,10 +25,25 @@ export default function Signup() {
       return
     }
     setSubmitting(true)
-    show('Demo mode — signup coming soon', 'info')
+    
+    // Simulate real signup locally
+    const users = JSON.parse(localStorage.getItem('naijaeats_users') || '[]')
+    if (users.find(u => u.email === email)) {
+      setTimeout(() => {
+        setSubmitting(false)
+        setError('Email already in use.')
+      }, 600)
+      return
+    }
+
+    users.push({ name, email, password })
+    localStorage.setItem('naijaeats_users', JSON.stringify(users))
+    localStorage.setItem('naijaeats_user', JSON.stringify({ name, email }))
+    
     setTimeout(() => {
-      navigate('/')
-    }, 2000)
+      show('Account created successfully!', 'success')
+      navigate('/dashboard')
+    }, 1000)
   }
 
   return (
@@ -39,7 +54,6 @@ export default function Signup() {
       transition={{ duration: 0.25 }}
       className="relative flex min-h-screen flex-col bg-navy"
     >
-      <div className="absolute inset-0 hero-glow" />
       <div className="absolute inset-0 grid-bg opacity-50" />
 
       <header className="container-x relative z-10 flex h-20 items-center justify-between">
@@ -58,7 +72,7 @@ export default function Signup() {
         >
           <div className="mb-7 text-center">
             <h1 className="font-display text-3xl font-bold text-white">Create Your Account</h1>
-            <p className="mt-2 text-sm text-muted">Join NaijaEats and try the demo.</p>
+            <p className="mt-2 text-sm text-muted">Join NaijaEats to get started.</p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">

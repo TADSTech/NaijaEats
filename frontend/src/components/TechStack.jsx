@@ -33,7 +33,6 @@ export default function TechStack() {
               transition={{ duration: 0.45, delay: i * 0.07 }}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-navy-soft/60 p-6 transition hover:border-gold/50"
             >
-              <span className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gold/10 blur-2xl transition group-hover:bg-gold/20" />
               <div className="relative">
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-gold/15 text-gold">
                   <t.icon size={20} />

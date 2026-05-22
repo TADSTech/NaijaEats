@@ -42,7 +42,7 @@ export default function BayoStory() {
                 <div className="text-[11px] text-slate2">online</div>
               </div>
             </div>
-            <span className="rounded-full bg-cream-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate2">
+            <span className="rounded-md bg-cream-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate2">
               WhatsApp
             </span>
           </div>

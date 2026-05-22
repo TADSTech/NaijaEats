@@ -10,7 +10,7 @@ const initialForm = {
   price: '₦₦'
 }
 
-export default function DemoPreview() {
+export default function AppPreview() {
   const [form, setForm] = useState(initialForm)
   const [loading, setLoading] = useState(false)
   const [output, setOutput] = useState(null)
@@ -35,7 +35,7 @@ export default function DemoPreview() {
     <section id="demo" className="bg-cream py-24 sm:py-28">
       <div className="container-x">
         <SectionHeading
-          eyebrow="Live Demo"
+          eyebrow="Live Preview"
           title="See It In Action"
           subtitle="Type in any restaurant. Watch NaijaEats predict Bayo's exact reaction — rating, voice, and all."
           tone="light"
@@ -46,7 +46,7 @@ export default function DemoPreview() {
           <form onSubmit={generate} className="rounded-2xl border border-navy/10 bg-white p-7 shadow-card">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="font-display text-lg font-bold text-navy">Restaurant Input</h3>
-              <span className="rounded-full bg-cream-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate2">
+              <span className="rounded-md bg-cream-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-slate2">
                 Mock · No API
               </span>
             </div>
@@ -103,7 +103,7 @@ export default function DemoPreview() {
           <div className="relative min-h-[360px] rounded-2xl border border-navy/10 bg-navy p-7 text-white shadow-card">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="font-display text-lg font-bold">Predicted Review</h3>
-              <span className="rounded-full border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted">
+              <span className="rounded-md border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted">
                 {form.userId}
               </span>
             </div>

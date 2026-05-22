@@ -96,9 +96,35 @@ class BehavioralProfiler:
     def load_profile(self, user_id: str) -> BehavioralFingerprint:
         """
         Load a pre-built fingerprint from persistent storage.
-        For now, returns a mock profile.
+        For now, returns a mock profile based on user_id to show different conditions.
         """
         # TODO: Load from persistent storage.
+        
+        if user_id == "amaka_002":
+            return BehavioralFingerprint(
+                user_id=user_id,
+                avg_rating=3.8,
+                rating_distribution={5: 2, 4: 5, 3: 10, 2: 4, 1: 1},
+                avg_review_length=250,
+                uses_pidgin=False,
+                preferred_cuisines=["Continental", "Italian", "Fine Dining"],
+                common_complaints=["bad lighting", "poor presentation", "rude waiters"],
+                common_praises=["aesthetic", "beautiful plating", "great ambience"],
+                price_sensitivity="low"
+            )
+        elif user_id == "chinedu_003":
+            return BehavioralFingerprint(
+                user_id=user_id,
+                avg_rating=4.5,
+                rating_distribution={5: 15, 4: 8, 3: 2, 2: 0, 1: 0},
+                avg_review_length=80,
+                uses_pidgin=True,
+                preferred_cuisines=["Nigerian", "Street food"],
+                common_complaints=["small portion", "expensive for nothing"],
+                common_praises=["plenty food", "cheap", "value for money"],
+                price_sensitivity="high"
+            )
+            
         return BehavioralFingerprint(
             user_id=user_id,
             avg_rating=4.2,
@@ -106,6 +132,9 @@ class BehavioralProfiler:
             avg_review_length=150,
             uses_pidgin=True,
             preferred_cuisines=["Nigerian"],
+            common_complaints=["slow service", "cold food"],
+            common_praises=["authentic taste", "good vibe"],
+            price_sensitivity="medium"
         )
 
     def save_profile(self, fingerprint: BehavioralFingerprint) -> None:

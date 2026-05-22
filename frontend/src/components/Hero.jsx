@@ -5,7 +5,6 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-navy pb-24 pt-32 md:pt-40">
       <div className="absolute inset-0 grid-bg opacity-60" />
-      <div className="absolute inset-0 hero-glow" />
 
       <div className="container-x relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
@@ -44,7 +43,7 @@ export default function Hero() {
               className="mt-9 flex flex-wrap items-center gap-4"
             >
               <a href="#demo" className="btn-gold">
-                Try The Demo <ArrowRight size={16} />
+                Try It Out <ArrowRight size={16} />
               </a>
               <a href="#how" className="btn-outline-dark">
                 <FileText size={16} /> Read The Paper
@@ -80,11 +79,9 @@ function HeroMock() {
       transition={{ duration: 0.7, delay: 0.3 }}
       className="relative mx-auto w-full max-w-md"
     >
-      <div className="absolute -inset-6 -z-10 rounded-[32px] bg-gradient-to-tr from-gold/20 via-transparent to-ngreen/20 blur-2xl" />
-
       <div className="rounded-2xl border border-white/10 bg-navy-soft/90 p-5 shadow-card backdrop-blur">
         <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted">
-          <span className="h-2 w-2 rounded-full bg-gold" /> Input · Restaurant
+          <span className="h-1.5 w-1.5 bg-gold" /> Input · Restaurant
         </div>
         <div className="rounded-xl border border-white/10 bg-navy/60 p-4">
           <div className="flex items-center gap-3">
@@ -102,14 +99,14 @@ function HeroMock() {
           <motion.div
             animate={{ y: [0, 4, 0] }}
             transition={{ repeat: Infinity, duration: 1.6 }}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-gold text-navy shadow-gold"
+            className="flex h-9 w-9 items-center justify-center rounded-md bg-gold text-navy shadow-gold"
           >
             <ArrowRight size={16} className="rotate-90" />
           </motion.div>
         </div>
 
         <div className="mb-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-ngreen-soft">
-          <span className="h-2 w-2 rounded-full bg-ngreen" /> Output · Bayo · 3/5
+          <span className="h-1.5 w-1.5 bg-ngreen" /> Output · Bayo · 3/5
         </div>
         <div className="rounded-xl border border-ngreen/30 bg-ngreen/10 p-4">
           <div className="mb-2 flex items-center gap-1 text-gold">

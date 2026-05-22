@@ -16,10 +16,24 @@ export default function Login() {
   const onSubmit = (e) => {
     e.preventDefault()
     setSubmitting(true)
-    show('Demo mode — login coming soon', 'info')
-    setTimeout(() => {
-      navigate('/')
-    }, 2000)
+    
+    // Check local storage for realistic simulation
+    const users = JSON.parse(localStorage.getItem('naijaeats_users') || '[]')
+    const user = users.find(u => u.email === email && u.password === password)
+
+    if (user) {
+      localStorage.setItem('naijaeats_user', JSON.stringify({ name: user.name, email: user.email }))
+      
+      setTimeout(() => {
+        show('Welcome back!', 'success')
+        navigate('/dashboard')
+      }, 800)
+    } else {
+      setTimeout(() => {
+        setSubmitting(false)
+        show('Invalid credentials. Please create an account first.', 'error')
+      }, 600)
+    }
   }
 
   return (
@@ -30,7 +44,6 @@ export default function Login() {
       transition={{ duration: 0.25 }}
       className="relative flex min-h-screen flex-col bg-navy"
     >
-      <div className="absolute inset-0 hero-glow" />
       <div className="absolute inset-0 grid-bg opacity-50" />
 
       <header className="container-x relative z-10 flex h-20 items-center justify-between">
