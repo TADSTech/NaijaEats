@@ -56,16 +56,10 @@ LOG_LEVEL=INFO
 
 We will use Render to host the FastAPI application using Python runtime.
 
-1. Create a `runtime.txt` file in your repository root with:
-   ```
-   python-3.10.16
-   ```
-   This ensures Python 3.10 is used (has pre-built wheels for pydantic-core).
-
-2. Create an account on [Render.com](https://render.com/).
-3. Click **New +** and select **Web Service**.
-4. Connect your GitHub repository.
-5. Fill in the following details:
+1. Create an account on [Render.com](https://render.com/).
+2. Click **New +** and select **Web Service**.
+3. Connect your GitHub repository.
+4. Fill in the following details:
    - **Name**: `naija-eats-api`
    - **Region**: Choose the closest one to you (e.g., Frankfurt/London)
    - **Branch**: `main`
@@ -74,7 +68,7 @@ We will use Render to host the FastAPI application using Python runtime.
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
    - **Instance Type**: Free
-6. Expand **Advanced**, and add your Environment Variables:
+5. Expand **Advanced**, and add your Environment Variables:
    - `OPENROUTER_API_KEY`: `your_actual_key_here`
    - `ENABLE_CULTURAL_LAYER`: `true`
    - `LLM_MODEL`: `claude-sonnet-4-20250514`
@@ -83,7 +77,7 @@ We will use Render to host the FastAPI application using Python runtime.
    - `MIN_USER_REVIEWS`: `10`
    - `CHROMA_PERSIST_DIR`: `./data/chroma`
    - `LOG_LEVEL`: `INFO`
-7. Click **Create Web Service**.
+6. Click **Create Web Service**.
 
 > **Note:** Render takes a few minutes to build and deploy. Once complete, you will receive a URL like `https://naija-eats-api.onrender.com`. **Save this URL** - you'll need it for the frontend configuration.
 
