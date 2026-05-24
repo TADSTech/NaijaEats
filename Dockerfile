@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install --prefix=/install --no-cache-dir -r requirements.txt
+    pip install --default-timeout=1000 --prefix=/install --no-cache-dir -r requirements.txt
 
 
 # --- Runtime stage: lean final image ---
