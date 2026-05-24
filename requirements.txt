@@ -1,7 +1,7 @@
 # --- Web framework ---
 fastapi==0.115.9
 uvicorn[standard]==0.34.2
-pydantic==2.10.5
+pydantic==2.11.4
 pydantic-settings==2.9.1
 
 # --- LLM & orchestration ---
@@ -17,7 +17,7 @@ chromadb==1.0.8
 
 # --- Data processing ---
 pandas==2.2.3
-numpy==2.1.0
+numpy==2.2.5
 datasets==3.6.0
 
 # --- NLP / sentiment ---

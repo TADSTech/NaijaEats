@@ -3,7 +3,7 @@
 This guide covers how to deploy the entire Naija Eats stack for free, ensuring it stays up, fast, and accessible for judges during the hackathon.
 
 ## Architecture Overview
-- **Backend**: Render (Python Web Service) - Required for AI review simulation
+- **Backend**: Render (Web Service using Docker) - Required for AI review simulation
 - **Frontend**: Vercel (Static Site) - Separate deployment
 - **Keep-Alive**: cron-job.org (Prevents free tier spin down)
 
@@ -52,9 +52,9 @@ LOG_LEVEL=INFO
 
 ---
 
-## 2. Deploy the Backend (FastAPI + Python)
+## 2. Deploy the Backend (FastAPI + Docker)
 
-We will use Render to host the FastAPI application using Python runtime.
+We will use Render to host the Dockerized FastAPI application.
 
 1. Create an account on [Render.com](https://render.com/).
 2. Click **New +** and select **Web Service**.
@@ -64,9 +64,7 @@ We will use Render to host the FastAPI application using Python runtime.
    - **Region**: Choose the closest one to you (e.g., Frankfurt/London)
    - **Branch**: `main`
    - **Root Directory**: `.` (leave empty)
-   - **Runtime**: Python 3
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+   - **Environment**: Select `Docker`
    - **Instance Type**: Free
 5. Expand **Advanced**, and add your Environment Variables:
    - `OPENROUTER_API_KEY`: `your_actual_key_here`
@@ -79,7 +77,7 @@ We will use Render to host the FastAPI application using Python runtime.
    - `LOG_LEVEL`: `INFO`
 6. Click **Create Web Service**.
 
-> **Note:** Render takes a few minutes to build and deploy. Once complete, you will receive a URL like `https://naija-eats-api.onrender.com`. **Save this URL** - you'll need it for the frontend configuration.
+> **Note:** Render takes a few minutes to build the container. Once complete, you will receive a URL like `https://naija-eats-api.onrender.com`. **Save this URL** - you'll need it for the frontend configuration.
 
 ---
 
